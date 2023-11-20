@@ -334,8 +334,8 @@ void ImageStats(Image img, uint8* min, uint8* max) { ///
   for (size_t x = 0;x <img -> width;x++){
     for(size_t y = 0;y<img->height;y++){
       pixel = ImageGetPixel(img, x, y);
-      if (pixel < *max) {*max = pixel;}
-      if (pixel > *min) {*min = pixel;}
+      if (pixel > *max) {*max = pixel;}
+      if (pixel < *min) {*min = pixel;}
     }
   }
 }
