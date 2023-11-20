@@ -10,11 +10,11 @@
 /// 2013, 2023
 
 // Student authors (fill in below):
-// NMec:  Name:
+// NMec: 115246 Name: Daniela Silva
 // 
 // 
 // 
-// Date:
+// Date: 11/19/2023
 //
 
 #include "image8bit.h"
@@ -167,12 +167,36 @@ void ImageInit(void) { ///
 /// On success, a new image is returned.
 /// (The caller is responsible for destroying the returned image!)
 /// On failure, returns NULL and errno/errCause are set accordingly.
+
 Image ImageCreate(int width, int height, uint8 maxval) { ///
   assert (width >= 0);
   assert (height >= 0);
   assert (0 < maxval && maxval <= PixMax);
   // Insert your code here!
+
+  Image image = malloc(sizeof(Image));
+  if (image == NULL) return NULL;
+
+  image -> width = width;
+  image -> height = height;
+  image -> maxval = (int) maxval;
+
+  image -> pixel = (uint8*)malloc(sizeof(uint8)*width*height);
+
+  
+  if (image -> pixel == NULL) {
+    free(image);
+    return NULL;
+  }
+  for (size_t i = 0;i < width*height;i++){ 
+    image->pixel[i]=0;
+  }
+
+  return image;
 }
+
+
+
 
 /// Destroy the image pointed to by (*imgp).
 ///   imgp : address of an Image variable.
@@ -180,8 +204,13 @@ Image ImageCreate(int width, int height, uint8 maxval) { ///
 /// Ensures: (*imgp)==NULL.
 /// Should never fail, and should preserve global errno/errCause.
 void ImageDestroy(Image* imgp) { ///
-  assert (imgp != NULL);
+  assert (*imgp != NULL);
   // Insert your code here!
+
+  Image image = *imgp;
+  free(image -> pixel);
+  free(image);
+  imgp = NULL;
 }
 
 
@@ -321,6 +350,12 @@ int ImageValidRect(Image img, int x, int y, int w, int h) { ///
 static inline int G(Image img, int x, int y) {
   int index;
   // Insert your code here!
+  //For example, in a 100-pixel wide image (img->width == 100),
+//   pixel position (x,y) = (33,0) is stored in img->pixel[33];
+//   pixel position (x,y) = (22,1) is stored in img->pixel[122].
+
+  index = y * img -> width + x;
+  
   assert (0 <= index && index < img->width*img->height);
   return index;
 }
