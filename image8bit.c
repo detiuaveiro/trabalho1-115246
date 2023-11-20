@@ -193,6 +193,15 @@ Image ImageCreate(int width, int height, uint8 maxval) { ///
   }
 
   return img;
+
+  /*
+  if (!success) {
+    errsave = errno;
+    ImageDestroy(&img);
+    errno = errsave;
+  }
+  if (f != NULL) fclose(f);
+  return img;*/ //?????????????????????
 }
 
 
@@ -202,7 +211,7 @@ Image ImageCreate(int width, int height, uint8 maxval) { ///
 ///   imgp : address of an Image variable.
 /// If (*imgp)==NULL, no operation is performed.
 /// Ensures: (*imgp)==NULL.
-/// Should never fail, and should preserve global errno/errCause.
+/// Should never fail, and should preserve global errno/errCause?????.
 void ImageDestroy(Image* imgp) { ///
   assert (*imgp != NULL);
   // Insert your code here!-----
@@ -323,19 +332,13 @@ int ImageMaxval(Image img) { ///
 void ImageStats(Image img, uint8* min, uint8* max) { ///
   assert (img != NULL);
   // Insert your code here!---
-  uint8 pixel;
-  /*
-  for(size_t i = 0;i < img -> width * img -> height;i++){
-    pixel = img->pixel[i];
-    if (pixel > *max) {*max = pixel;}
-    if (pixel < *min) {*min = pixel;}
-  }*/
+  uint8 pix;
 
   for (size_t x = 0;x <img -> width;x++){
     for(size_t y = 0;y<img->height;y++){
-      pixel = ImageGetPixel(img, x, y);
-      if (pixel > *max) {*max = pixel;}
-      if (pixel < *min) {*min = pixel;}
+      pix = ImageGetPixel(img, x, y);
+      if (pix > *max) {*max = pix;}
+      if (pix < *min) {*min = pix;}
     }
   }
 }
@@ -350,6 +353,17 @@ int ImageValidPos(Image img, int x, int y) { ///
 int ImageValidRect(Image img, int x, int y, int w, int h) { ///
   assert (img != NULL);
   // Insert your code here!
+
+  assert(x >= 0);
+  assert(y >= 0);
+  assert(w >= 0);
+  assert(h >= 0);
+
+  int valid_rect = 0;
+
+  if (x + w <= img -> width && y + h <= img -> height){valid_rect = 1;}
+  return valid_rect;
+
 }
 
 /// Pixel get & set operations
@@ -405,7 +419,14 @@ void ImageSetPixel(Image img, int x, int y, uint8 level) { ///
 /// resulting in a "photographic negative" effect.
 void ImageNegative(Image img) { ///
   assert (img != NULL);
-  // Insert your code here!
+  uint8 pix_og;
+  // Insert your code here!----
+  for (size_t x = 0;x <img -> width;x++){
+    for(size_t y = 0;y<img->height;y++){
+      pix_og = ImageGetPixel(img,x,y);
+      ImageSetPixel(img,x,y,img -> maxval - pix_og);
+      }
+  }
 }
 
 /// Apply threshold to image.
@@ -413,7 +434,19 @@ void ImageNegative(Image img) { ///
 /// all pixels with level>=thr to white (maxval).
 void ImageThreshold(Image img, uint8 thr) { ///
   assert (img != NULL);
-  // Insert your code here!
+// Insert your code here!----------
+  for (size_t x = 0;x <img -> width;x++){
+    for(size_t y = 0;y<img->height;y++){
+      
+      if (ImageGetPixel(x,y,img) >= thr){
+        ImageSetPixel(img,x,y,img -> maxval);
+      }
+      else {
+        ImageSetPixel(img,x,y,0);
+      }
+    }
+  
+}
 }
 
 /// Brighten image by a factor.
@@ -422,9 +455,23 @@ void ImageThreshold(Image img, uint8 thr) { ///
 /// darken the image if factor<1.0.
 void ImageBrighten(Image img, double factor) { ///
   assert (img != NULL);
-  // ? assert (factor >= 0.0);
-  // Insert your code here!
+  assert (factor >= 0.0);
+  // Insert your code here!---------
+  uint8 pix_og,pix_new;
+  for (size_t x = 0;x <img -> width;x++){
+    for(size_t y = 0;y<img->height;y++){
+      pix_og = ImageGetPixel(img,x,y);
+      pix_new = pix_og * factor;
+      ImageSetPixel(img,x,y,(pix_new > img->maxval) ? img->maxval : pix_new);
+    }
+  }
 }
+
+
+
+
+
+
 
 
 /// Geometric transformations
@@ -450,7 +497,11 @@ void ImageBrighten(Image img, double factor) { ///
 /// On failure, returns NULL and errno/errCause are set accordingly.
 Image ImageRotate(Image img) { ///
   assert (img != NULL);
-  // Insert your code here!
+  // Insert your code here!-----------
+
+
+
+
 }
 
 /// Mirror an image = flip left-right.
@@ -463,6 +514,9 @@ Image ImageRotate(Image img) { ///
 Image ImageMirror(Image img) { ///
   assert (img != NULL);
   // Insert your code here!
+  Image img_new = ImageCreate(img -> width,img -> height,img -> maxval);
+  if (img_new == NULL) { return NULL;}
+
 }
 
 /// Crop a rectangular subimage from img.

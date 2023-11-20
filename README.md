@@ -36,7 +36,7 @@ Execute:
 
 Sugere-se o desenvolvimento progressivo pela seguinte ordem:
 
-1. Completar `ImageCreate` e `ImageDestroy`.
+1. Completar `ImageCreate`-LISTO- e `ImageDestroy`-LISTO-.
 2. Compilar os programas correndo `make`
    e testar com
 
@@ -46,14 +46,14 @@ Sugere-se o desenvolvimento progressivo pela seguinte ordem:
    
    Isto chama `ImageLoad`, que chama `ImageCreate`
    e depois `ImageSave` e `ImageDestroy`.
-   Verificar que toda a memória foi libertada.
-3. Completar a função interna `G`,
+   Verificar que toda a memória foi libertada.-LISTO-
+3. Completar a função interna `G`-LISTO-,
    que é usada por `ImageSetPixel` e `ImageGePixel`.
-4. Completar `ImageStats`.
-   Se usar `ImageGePixel`, permitirá testar `G`.
-   Testar com `./imageTool test/original.pgm info`.
-5. Completar `ImageNegative`, `ImageThreshold`, `ImageBrighten`.
-6. Completar `ImageValidRect`.
+4. Completar `ImageStats`.-LISTO-
+   Se usar `ImageGePixel`, permitirá testar `G`-LISTO-.
+   Testar com `./imageTool test/original.pgm info`.-LISTO-
+5. Completar `ImageNegative`-LISTO-, `ImageThreshold`-LISTO-, `ImageBrighten`-LISTO-.
+6. Completar `ImageValidRect`.-LISTO-
 7. Completar `ImageMirror`, `ImageRotate`.
 8. Completar `ImageCrop`, `ImagePaste` e `ImageBlend`.
 9. Completar `ImageMatchSubImage` e `ImageLocateSubImage`.
