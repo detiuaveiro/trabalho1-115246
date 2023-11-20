@@ -166,7 +166,7 @@ void ImageInit(void) { ///
 /// 
 /// On success, a new image is returned.
 /// (The caller is responsible for destroying the returned image!)
-/// On failure, returns NULL and errno/errCause are set accordingly.
+/// On failure, returns NULL and errno/errCause are set accordingly-FALTA(ver anterior).
 
 Image ImageCreate(int width, int height, uint8 maxval) { ///
   assert (width >= 0);
