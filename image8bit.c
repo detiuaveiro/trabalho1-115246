@@ -435,8 +435,8 @@ void ImageNegative(Image img) { ///
 void ImageThreshold(Image img, uint8 thr) { ///
   assert (img != NULL);
 // Insert your code here!----------
-  for (int x = 0;x <img -> width;x++){
-    for(int y = 0;y<img->height;y++){
+  for (int x = 0;x < img -> width;x++){
+    for(int y = 0;y < img->height;y++){
       
       if (ImageGetPixel(img,x,y) >= thr){
         ImageSetPixel(img,x,y,img -> maxval);
