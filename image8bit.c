@@ -438,7 +438,7 @@ void ImageThreshold(Image img, uint8 thr) { ///
   for (int x = 0;x <img -> width;x++){
     for(int y = 0;y<img->height;y++){
       
-      if (ImageGetPixel(x,y,img) >= thr){
+      if (ImageGetPixel(img,x,y) >= thr){
         ImageSetPixel(img,x,y,img -> maxval);
       }
       else {
@@ -626,7 +626,7 @@ int ImageMatchSubImage(Image img1, int x, int y, Image img2) { ///
   // Insert your code here!
 
   int match = 1;
-  uint8 pix_img2,pix_img1,pix_blend;
+  uint8 pix_img2,pix_img1;
   for (int i = x;i < img2 -> width;i++){
     for(int j = y;j < img2 -> height;j++){
 
@@ -650,7 +650,6 @@ int ImageLocateSubImage(Image img1, int* px, int* py, Image img2) { ///
   // Insert your code here!
 
  int match = 0;
-  uint8 pix_img2,pix_img1,pix_blend;
   for (int i = 0;i < img2 -> width;i++){
     for(int j = 0;j < img2 -> height;j++){
 
@@ -676,7 +675,7 @@ void ImageBlur(Image img, int dx, int dy) { ///
   // Insert your code here!
   assert (img != NULL);
 
-  uint8_t pix_og, pix_filter;
+  uint8_t pix_filter;
 
   for (int i = 0; i < img->width; i++) {
     for (int j = 0; j < img->height; j++) {
