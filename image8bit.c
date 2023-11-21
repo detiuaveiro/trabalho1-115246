@@ -499,10 +499,22 @@ Image ImageRotate(Image img) { ///
   assert (img != NULL);
   // Insert your code here!-----------
 
-
-
-
+  
+  Image img_new = ImageCreate(img->height, img->width, img->maxval);
+  if (img_new == NULL) {
+    return NULL;
+  }
+  for (size_t x = 0; x < img->width; x++) {
+    for (size_t y = 0; y < img->height; y++) {
+      uint8 pix_og = ImageGetPixel(img, x, y);
+      ImageSetPixel(img_new, y, img->width - 1 - x, pix_og);
+    }
+  }
+  return img_new;
 }
+
+
+
 
 /// Mirror an image = flip left-right.
 /// Returns a mirrored version of the image.
@@ -510,13 +522,21 @@ Image ImageRotate(Image img) { ///
 /// 
 /// On success, a new image is returned.
 /// (The caller is responsible for destroying the returned image!)
-/// On failure, returns NULL and errno/errCause are set accordingly.
+/// On failure, returns NULL and errno/errCause are set accordingly-FALTA.
 Image ImageMirror(Image img) { ///
   assert (img != NULL);
-  // Insert your code here!
+  // Insert your code here!-----------
   Image img_new = ImageCreate(img -> width,img -> height,img -> maxval);
   if (img_new == NULL) { return NULL;}
 
+  uint8 pix_og;
+  for (size_t x = 0;x < img -> width;x++){
+    for(size_t y = 0;y < img->height;y++){
+      pix_og = ImageGetPixel(img,x,y);
+      ImageSetPixel(img_new,img -> width - x - 1,y,pix_og);
+    }
+  }
+  return img_new;
 }
 
 /// Crop a rectangular subimage from img.
@@ -534,7 +554,19 @@ Image ImageMirror(Image img) { ///
 Image ImageCrop(Image img, int x, int y, int w, int h) { ///
   assert (img != NULL);
   assert (ImageValidRect(img, x, y, w, h));
-  // Insert your code here!
+  // Insert your code here!------
+
+  Image img_new = ImageCreate(w,h,img -> maxval);
+  if (img_new == NULL) { return NULL;}
+
+  uint8 pix_og;
+  for (size_t i = x;i < w;i++){
+    for(size_t j = y;j < h;j++){
+      pix_og = ImageGetPixel(img,i,j);
+      ImageSetPixel(img_new,i - x,j - y,pix_og);
+    }
+  }
+  return img_new;
 }
 
 
@@ -548,7 +580,15 @@ void ImagePaste(Image img1, int x, int y, Image img2) { ///
   assert (img1 != NULL);
   assert (img2 != NULL);
   assert (ImageValidRect(img1, x, y, img2->width, img2->height));
-  // Insert your code here!
+  // Insert your code here!-----
+
+  uint8 pix_img2;
+  for (size_t i = x;i < img2 -> width;i++){
+    for(size_t j = y;j < img2 -> height;j++){
+      pix_img2 = ImageGetPixel(img2,i - x,j - y);
+      ImageSetPixel(img1,i,j,pix_img2);
+    }
+  }
 }
 
 /// Blend an image into a larger image.
@@ -561,7 +601,12 @@ void ImageBlend(Image img1, int x, int y, Image img2, double alpha) { ///
   assert (img1 != NULL);
   assert (img2 != NULL);
   assert (ImageValidRect(img1, x, y, img2->width, img2->height));
-  // Insert your code here!
+  // Insert your code here!---------
+  
+
+
+
+
 }
 
 /// Compare an image to a subimage of a larger image.

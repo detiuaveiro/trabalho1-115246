@@ -54,7 +54,7 @@ Sugere-se o desenvolvimento progressivo pela seguinte ordem:
    Testar com `./imageTool test/original.pgm info`.-LISTO-
 5. Completar `ImageNegative`-LISTO-, `ImageThreshold`-LISTO-, `ImageBrighten`-LISTO-.
 6. Completar `ImageValidRect`.-LISTO-
-7. Completar `ImageMirror`, `ImageRotate`.
+7. Completar `ImageMirror`-LISTO-, `ImageRotate`.-LISTO-
 8. Completar `ImageCrop`, `ImagePaste` e `ImageBlend`.
 9. Completar `ImageMatchSubImage` e `ImageLocateSubImage`.
 10. Completar `ImageBlur`.
