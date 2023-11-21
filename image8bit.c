@@ -435,8 +435,8 @@ void ImageNegative(Image img) { ///
 void ImageThreshold(Image img, uint8 thr) { ///
   assert (img != NULL);
 // Insert your code here!----------
-  for (size_t x = 0;x <img -> width;x++){
-    for(size_t y = 0;y<img->height;y++){
+  for (int x = 0;x <img -> width;x++){
+    for(int y = 0;y<img->height;y++){
       
       if (ImageGetPixel(x,y,img) >= thr){
         ImageSetPixel(img,x,y,img -> maxval);
@@ -602,7 +602,7 @@ void ImageBlend(Image img1, int x, int y, Image img2, double alpha) { ///
   assert (img2 != NULL);
   assert (ImageValidRect(img1, x, y, img2->width, img2->height));
   // Insert your code here!---------
-  
+
 
 
 
