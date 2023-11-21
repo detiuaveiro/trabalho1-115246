@@ -55,7 +55,7 @@ Sugere-se o desenvolvimento progressivo pela seguinte ordem:
 5. Completar `ImageNegative`-LISTO-, `ImageThreshold`-LISTO-, `ImageBrighten`-LISTO-.
 6. Completar `ImageValidRect`.-LISTO-
 7. Completar `ImageMirror`-LISTO-, `ImageRotate`.-LISTO-
-8. Completar `ImageCrop`, `ImagePaste` e `ImageBlend`.
+8. Completar `ImageCrop`LISTO-, `ImagePaste`LISTO- e `ImageBlend`.LISTO-
 9. Completar `ImageMatchSubImage` e `ImageLocateSubImage`.
 10. Completar `ImageBlur`.
 

@@ -603,10 +603,17 @@ void ImageBlend(Image img1, int x, int y, Image img2, double alpha) { ///
   assert (ImageValidRect(img1, x, y, img2->width, img2->height));
   // Insert your code here!---------
 
+  uint8 pix_img2,pix_img1,pix_blend;
+  for (int i = x;i < img2 -> width;i++){
+    for(int j = y;j < img2 -> height;j++){
 
+      pix_img1 = ImageGetPixel(img1,i,j);
+      pix_img2 = ImageGetPixel(img2,i - x,j - y);
+      pix_blend = (1.0 - alpha) * pix_img1 + alpha * pix_img2;
 
-
-
+      ImageSetPixel(img1,i,j,pix_blend);
+    }
+  }
 }
 
 /// Compare an image to a subimage of a larger image.
@@ -617,6 +624,20 @@ int ImageMatchSubImage(Image img1, int x, int y, Image img2) { ///
   assert (img2 != NULL);
   assert (ImageValidPos(img1, x, y));
   // Insert your code here!
+
+  int match = 1;
+  uint8 pix_img2,pix_img1,pix_blend;
+  for (int i = x;i < img2 -> width;i++){
+    for(int j = y;j < img2 -> height;j++){
+
+      pix_img1 = ImageGetPixel(img1,i,j);
+      pix_img2 = ImageGetPixel(img2,i - x,j - y);
+      
+      if (pix_img1 != pix_img2){match = 0;}
+    }
+  }
+  return match;
+
 }
 
 /// Locate a subimage inside another image.
@@ -627,6 +648,21 @@ int ImageLocateSubImage(Image img1, int* px, int* py, Image img2) { ///
   assert (img1 != NULL);
   assert (img2 != NULL);
   // Insert your code here!
+
+ int match = 0;
+  uint8 pix_img2,pix_img1,pix_blend;
+  for (int i = 0;i < img2 -> width;i++){
+    for(int j = 0;j < img2 -> height;j++){
+
+      if(ImageMatchSubImage(img1,i,j,img2)){
+        match = 1;
+        *px = i;
+        *py = j; 
+        break;
+      }
+    }
+  }
+  return match;
 }
 
 
@@ -638,5 +674,34 @@ int ImageLocateSubImage(Image img1, int* px, int* py, Image img2) { ///
 /// The image is changed in-place.
 void ImageBlur(Image img, int dx, int dy) { ///
   // Insert your code here!
+  assert (img != NULL);
+
+  uint8_t pix_og, pix_filter;
+
+  for (int i = 0; i < img->width; i++) {
+    for (int j = 0; j < img->height; j++) {
+      int sum = 0;
+      int count = 0;
+
+      for (int di = -dx; di <= dx; di++) {
+        for (int dj = -dy; dj <= dy; dj++) {
+          int ni = i + di;
+          int nj = j + dj;
+
+          if (ni >= 0 && ni < img->width && nj >= 0 && nj < img->height) {
+            sum += ImageGetPixel(img, ni, nj);
+            count++;
+          }
+        }
+      }
+
+      // Calcular el valor promedio y establecerlo en el píxel de salida
+      if (count > 0) {
+        pix_filter = sum / count;
+        ImageSetPixel(img, i, j, pix_filter);
+      }
+    }
+  }
+
 }
 
