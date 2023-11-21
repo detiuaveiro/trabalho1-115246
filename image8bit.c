@@ -188,7 +188,7 @@ Image ImageCreate(int width, int height, uint8 maxval) { ///
     free(img);
     return NULL;
   }
-  for (size_t i = 0;i < width*height;i++){ 
+  for (int i = 0;i < width*height;i++){ 
     img->pixel[i]=0;
   }
 
@@ -334,8 +334,8 @@ void ImageStats(Image img, uint8* min, uint8* max) { ///
   // Insert your code here!---
   uint8 pix;
 
-  for (size_t x = 0;x <img -> width;x++){
-    for(size_t y = 0;y<img->height;y++){
+  for (int x = 0;x <img -> width;x++){
+    for(int y = 0;y<img->height;y++){
       pix = ImageGetPixel(img, x, y);
       if (pix > *max) {*max = pix;}
       if (pix < *min) {*min = pix;}
@@ -421,8 +421,8 @@ void ImageNegative(Image img) { ///
   assert (img != NULL);
   uint8 pix_og;
   // Insert your code here!----
-  for (size_t x = 0;x <img -> width;x++){
-    for(size_t y = 0;y<img->height;y++){
+  for (int x = 0;x <img -> width;x++){
+    for(int y = 0;y<img->height;y++){
       pix_og = ImageGetPixel(img,x,y);
       ImageSetPixel(img,x,y,img -> maxval - pix_og);
       }
@@ -458,8 +458,8 @@ void ImageBrighten(Image img, double factor) { ///
   assert (factor >= 0.0);
   // Insert your code here!---------
   uint8 pix_og,pix_new;
-  for (size_t x = 0;x <img -> width;x++){
-    for(size_t y = 0;y<img->height;y++){
+  for (int x = 0;x <img -> width;x++){
+    for(int y = 0;y<img->height;y++){
       pix_og = ImageGetPixel(img,x,y);
       pix_new = pix_og * factor;
       ImageSetPixel(img,x,y,(pix_new > img->maxval) ? img->maxval : pix_new);
@@ -504,8 +504,8 @@ Image ImageRotate(Image img) { ///
   if (img_new == NULL) {
     return NULL;
   }
-  for (size_t x = 0; x < img->width; x++) {
-    for (size_t y = 0; y < img->height; y++) {
+  for (int x = 0; x < img->width; x++) {
+    for (int y = 0; y < img->height; y++) {
       uint8 pix_og = ImageGetPixel(img, x, y);
       ImageSetPixel(img_new, y, img->width - 1 - x, pix_og);
     }
@@ -530,8 +530,8 @@ Image ImageMirror(Image img) { ///
   if (img_new == NULL) { return NULL;}
 
   uint8 pix_og;
-  for (size_t x = 0;x < img -> width;x++){
-    for(size_t y = 0;y < img->height;y++){
+  for (int x = 0;x < img -> width;x++){
+    for(int y = 0;y < img->height;y++){
       pix_og = ImageGetPixel(img,x,y);
       ImageSetPixel(img_new,img -> width - x - 1,y,pix_og);
     }
@@ -560,8 +560,8 @@ Image ImageCrop(Image img, int x, int y, int w, int h) { ///
   if (img_new == NULL) { return NULL;}
 
   uint8 pix_og;
-  for (size_t i = x;i < w;i++){
-    for(size_t j = y;j < h;j++){
+  for (int i = x;i < w;i++){
+    for(int j = y;j < h;j++){
       pix_og = ImageGetPixel(img,i,j);
       ImageSetPixel(img_new,i - x,j - y,pix_og);
     }
@@ -583,8 +583,8 @@ void ImagePaste(Image img1, int x, int y, Image img2) { ///
   // Insert your code here!-----
 
   uint8 pix_img2;
-  for (size_t i = x;i < img2 -> width;i++){
-    for(size_t j = y;j < img2 -> height;j++){
+  for (int i = x;i < img2 -> width;i++){
+    for(int j = y;j < img2 -> height;j++){
       pix_img2 = ImageGetPixel(img2,i - x,j - y);
       ImageSetPixel(img1,i,j,pix_img2);
     }
