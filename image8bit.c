@@ -610,9 +610,9 @@ void ImageBlend(Image img1, int x, int y, Image img2, double alpha) { ///
   for (int i = 0;i < img2 -> width;i++){
     for(int j = 0;j < img2 -> height;j++){
 
-      pix_img1 = ImageGetPixel(img1,i + x,j + y);
       pix_img2 = ImageGetPixel(img2,i,j);
-      pix_blend = (1.0 - alpha) * pix_img1 + alpha * pix_img2;
+      pix_img1 = ImageGetPixel(img1,i + x,j + y);
+      pix_blend = alpha * pix_img1 + (1.0 - alpha) * pix_img2;
 
       ImageSetPixel(img1,i + x,j + y,pix_blend);
     }

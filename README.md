@@ -58,8 +58,8 @@ Sugere-se o desenvolvimento progressivo pela seguinte ordem:
 6. Completar `ImageValidRect`.-LISTO-
 7. Completar `ImageMirror`-LISTO-VERIFICADO, 4
             `ImageRotate`.-LISTO-VERIFICADO  5
-8. Completar `ImageCrop`LISTO-,   6
-            `ImagePaste`LISTO- e  7
+8. Completar `ImageCrop`LISTO-VERIFICADO,   6
+            `ImagePaste`LISTO- VERFICADO e  7
             `ImageBlend`.LISTO-  8
 9. Completar `ImageMatchSubImage`.LISTO- e  9
             `ImageLocateSubImage`..LISTO- 10
