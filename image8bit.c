@@ -612,7 +612,7 @@ void ImageBlend(Image img1, int x, int y, Image img2, double alpha) { ///
 
       pix_img2 = ImageGetPixel(img2,i,j);
       pix_img1 = ImageGetPixel(img1,i + x,j + y);
-      pix_blend = alpha * pix_img1 + (1.0 - alpha) * pix_img2;
+      pix_blend = ((1.0 - alpha) * pix_img1 + alpha * pix_img2) + 0.5;
 
       ImageSetPixel(img1,i + x,j + y,pix_blend);
     }
@@ -699,7 +699,7 @@ void ImageBlur(Image img, int dx, int dy) { ///
 
       // Calcular el valor promedio y establecerlo en el píxel de salida
       if (count > 0) {
-        pix_filter = sum / count;
+        pix_filter = (sum / count);
         ImageSetPixel(img, i, j, pix_filter);
       }
     }

@@ -61,9 +61,9 @@ Sugere-se o desenvolvimento progressivo pela seguinte ordem:
 8. Completar `ImageCrop`LISTO-VERIFICADO,   6
             `ImagePaste`LISTO- VERFICADO e  7
             `ImageBlend`.LISTO-  8
-9. Completar `ImageMatchSubImage`.LISTO- e  9
-            `ImageLocateSubImage`..LISTO- 10
-10. Completar `ImageBlur`..LISTO- 11
+9. Completar `ImageMatchSubImage`.LISTO- e  
+            `ImageLocateSubImage`..LISTO- 
+10. Completar `ImageBlur`..LISTO- 9
 
 Pode executar `make test1`, `make test2`, etc.
 para fazer testes simples a muitas destas funções.
