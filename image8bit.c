@@ -679,11 +679,12 @@ void ImageBlur(Image img, int dx, int dy) { ///
   assert (img != NULL);
 
   uint8_t pix_filter;
+  Image img_copia = ImageCreate(ImageWidth(img),ImageHeight(img),ImageMaxval(img));
 
   for (int i = 0; i < img->width; i++) {
     for (int j = 0; j < img->height; j++) {
-      int sum = 0;
-      int count = 0;
+      double sum = 0;
+      double count = 0;
 
       for (int di = -dx; di <= dx; di++) {
         for (int dj = -dy; dj <= dy; dj++) {
@@ -699,11 +700,13 @@ void ImageBlur(Image img, int dx, int dy) { ///
 
       // Calcular el valor promedio y establecerlo en el píxel de salida
       if (count > 0) {
-        pix_filter = (sum / count);
-        ImageSetPixel(img, i, j, pix_filter);
+        pix_filter = (sum / count + 0.5) ;
+        ImageSetPixel(img_copia, i, j, pix_filter);
       }
     }
   }
+
+  ImagePaste(img,0,0,img_copia);
 
 }
 
