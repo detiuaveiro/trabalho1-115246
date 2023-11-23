@@ -52,18 +52,18 @@ Sugere-se o desenvolvimento progressivo pela seguinte ordem:
 4. Completar `ImageStats`.-LISTO-
    Se usar `ImageGePixel`, permitirá testar `G`-LISTO-.
    Testar com `./imageTool test/original.pgm info`.-LISTO-
-5. Completar`ImageNegative`-LISTO-VERIFICADO, 
-            `ImageThreshold`-LISTO-, 
-            `ImageBrighten`-LISTO-.
+5. Completar`ImageNegative`-LISTO-VERIFICADO, 1
+            `ImageThreshold`-LISTO-VERIFICADO, 2
+            `ImageBrighten`-LISTO-VERIFICADO.3
 6. Completar `ImageValidRect`.-LISTO-
-7. Completar `ImageMirror`-LISTO-VERIFICADO, 
-            `ImageRotate`.-LISTO-VERIFICADO
-8. Completar `ImageCrop`LISTO-, 
-            `ImagePaste`LISTO- e
-            `ImageBlend`.LISTO-
-9. Completar `ImageMatchSubImage`.LISTO- e 
-            `ImageLocateSubImage`..LISTO-
-10. Completar `ImageBlur`..LISTO-
+7. Completar `ImageMirror`-LISTO-VERIFICADO, 4
+            `ImageRotate`.-LISTO-VERIFICADO  5
+8. Completar `ImageCrop`LISTO-,   6
+            `ImagePaste`LISTO- e  7
+            `ImageBlend`.LISTO-  8
+9. Completar `ImageMatchSubImage`.LISTO- e  9
+            `ImageLocateSubImage`..LISTO- 10
+10. Completar `ImageBlur`..LISTO- 11
 
 Pode executar `make test1`, `make test2`, etc.
 para fazer testes simples a muitas destas funções.

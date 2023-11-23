@@ -449,6 +449,8 @@ void ImageThreshold(Image img, uint8 thr) { ///
 }
 }
 
+//pixmen pixops calltime time 
+
 /// Brighten image by a factor.
 /// Multiply each pixel level by a factor, but saturate at maxval.
 /// This will brighten the image if factor>1.0 and
@@ -456,12 +458,13 @@ void ImageThreshold(Image img, uint8 thr) { ///
 void ImageBrighten(Image img, double factor) { ///
   assert (img != NULL);
   assert (factor >= 0.0);
+  assert (factor <= 1.0);
   // Insert your code here!---------
   uint8 pix_og,pix_new;
-  for (int x = 0;x <img -> width;x++){
-    for(int y = 0;y<img->height;y++){
+  for (int x = 0;x < img -> width;x++){
+    for(int y = 0;y < img->height;y++){
       pix_og = ImageGetPixel(img,x,y);
-      pix_new = pix_og * factor;
+      pix_new = pix_og * factor + 0.5;
       ImageSetPixel(img,x,y,(pix_new > img->maxval) ? img->maxval : pix_new);
     }
   }
@@ -560,10 +563,10 @@ Image ImageCrop(Image img, int x, int y, int w, int h) { ///
   if (img_new == NULL) { return NULL;}
 
   uint8 pix_og;
-  for (int i = x;i < w;i++){
-    for(int j = y;j < h;j++){
-      pix_og = ImageGetPixel(img,i,j);
-      ImageSetPixel(img_new,i - x,j - y,pix_og);
+  for (int i = 0;i < w;i++){
+    for(int j = 0;j < h;j++){
+      pix_og = ImageGetPixel(img,i + x,j + y);
+      ImageSetPixel(img_new,i,j,pix_og);
     }
   }
   return img_new;
@@ -583,10 +586,10 @@ void ImagePaste(Image img1, int x, int y, Image img2) { ///
   // Insert your code here!-----
 
   uint8 pix_img2;
-  for (int i = x;i < img2 -> width;i++){
-    for(int j = y;j < img2 -> height;j++){
-      pix_img2 = ImageGetPixel(img2,i - x,j - y);
-      ImageSetPixel(img1,i,j,pix_img2);
+  for (int i = 0;i < img2 -> width;i++){
+    for(int j = 0;j < img2 -> height;j++){
+      pix_img2 = ImageGetPixel(img2,i,j);
+      ImageSetPixel(img1,i + x,j + y,pix_img2);
     }
   }
 }
@@ -604,14 +607,14 @@ void ImageBlend(Image img1, int x, int y, Image img2, double alpha) { ///
   // Insert your code here!---------
 
   uint8 pix_img2,pix_img1,pix_blend;
-  for (int i = x;i < img2 -> width;i++){
-    for(int j = y;j < img2 -> height;j++){
+  for (int i = 0;i < img2 -> width;i++){
+    for(int j = 0;j < img2 -> height;j++){
 
-      pix_img1 = ImageGetPixel(img1,i,j);
-      pix_img2 = ImageGetPixel(img2,i - x,j - y);
+      pix_img1 = ImageGetPixel(img1,i + x,j + y);
+      pix_img2 = ImageGetPixel(img2,i,j);
       pix_blend = (1.0 - alpha) * pix_img1 + alpha * pix_img2;
 
-      ImageSetPixel(img1,i,j,pix_blend);
+      ImageSetPixel(img1,i + x,j + y,pix_blend);
     }
   }
 }
@@ -627,11 +630,11 @@ int ImageMatchSubImage(Image img1, int x, int y, Image img2) { ///
 
   int match = 1;
   uint8 pix_img2,pix_img1;
-  for (int i = x;i < img2 -> width;i++){
-    for(int j = y;j < img2 -> height;j++){
+  for (int i = 0;i < img2 -> width;i++){
+    for(int j = 0;j < img2 -> height;j++){
 
-      pix_img1 = ImageGetPixel(img1,i,j);
-      pix_img2 = ImageGetPixel(img2,i - x,j - y);
+      pix_img1 = ImageGetPixel(img1,i + x,j + y);
+      pix_img2 = ImageGetPixel(img2,i,j);
       
       if (pix_img1 != pix_img2){match = 0;}
     }
