@@ -147,11 +147,13 @@ void ImageInit(void) { ///
   InstrCalibrate();
   InstrName[0] = "pixmem";  // InstrCount[0] will count pixel array acesses
   // Name other counters here...
+  InstrName[1] = "comparisons";  // Contador para comparações
   
 }
 
 // Macros to simplify accessing instrumentation counters:
 #define PIXMEM InstrCount[0]
+#define COMPARISONS InstrCount[1]
 // Add more macros here...
 
 // TIP: Search for PIXMEM or InstrCount to see where it is incremented!
@@ -646,61 +648,68 @@ void ImageBlend(Image img1, int x, int y, Image img2, double alpha) { ///
   }
 }
 
-/// Compare an image to a subimage of a larger image.
-/// Returns 1 (true) if img2 matches subimage of img1 at pos (x, y).
-/// Returns 0, otherwise.
 int ImageMatchSubImage(Image img1, int x, int y, Image img2) { ///
-  assert (img1 != NULL);
-  assert (img2 != NULL);
-  assert (ImageValidPos(img1, x, y));
-  // Insert your code here!
+  assert(img1 != NULL);
+  assert(img2 != NULL);
+  assert(ImageValidPos(img1, x, y));
 
-  int match = 1;// Inicializa a variável de correspondência como verdadeira
-  uint8 pix_img2,pix_img1;
+  uint8 pix_img2, pix_img1;
+
+  //StartTimer();
+
   // Itera sobre os pixels da segunda imagem
-  for (int i = 0;i < img2 -> width;i++){
-    for(int j = 0;j < img2 -> height;j++){
+  for (int i = 0; i < img2->width; i++) {
+    for (int j = 0; j < img2->height; j++) {
       // Obtém os valores dos pixels das duas imagens nas posições correspondentes
-      pix_img1 = ImageGetPixel(img1,i + x,j + y);
-      pix_img2 = ImageGetPixel(img2,i,j);
-      // Verifica se os pixels são diferentes; se sim, a correspondência é falsa
-      if (pix_img1 != pix_img2){match = 0;}
+      if (ImageValidPos(img1, i + x, j + y) && ImageValidPos(img2, i, j)) {
+        pix_img2 = ImageGetPixel(img2, i, j);
+        pix_img1 = ImageGetPixel(img1, i + x, j + y);
+        COMPARISONS++;
+        PIXMEM += 2;
+        // Verifica se os pixels são diferentes; se sim, a correspondência é falsa
+        if (pix_img1 != pix_img2) {
+          
+          return 0; // falsa
+        }
+      } else {
+        return 0; // Se uma posição não for válida, considerar como não correspondência
+      }
     }
   }
-  return match;// 1 se verdadeira, 0 caso contrario
 
+ // StopTimer();
+
+
+  return 1; // verdadeiro
 }
 
-/// Locate a subimage inside another image.
-/// Searches for img2 inside img1.
-/// If a match is found, returns 1 and matching position is set in vars (*px, *py).
-/// If no match is found, returns 0 and (*px, *py) are left untouched.
 int ImageLocateSubImage(Image img1, int* px, int* py, Image img2) { ///
-  assert (img1 != NULL);
-  assert (img2 != NULL);
-  // Insert your code here!
+  assert(img1 != NULL);
+  assert(img2 != NULL);
 
- int match = 0; // Inicializa a variável de correspondência como falsa
+  int match = 0; // Inicializa a variável de correspondência como falsa
 
- // Itera sobre as posições possíveis da subimagem dentro da imagem principal
-  for (int i = 0;i < img2 -> width;i++){
-    for(int j = 0;j < img2 -> height;j++){
+  // Itera sobre as posições possíveis da subimagem dentro da imagem principal
+  for (int i = 0; i < img1->width - img2->width + 1; i++) {
+    for (int j = 0; j < img1->height - img2->height + 1; j++) {
 
-// Verifica se há uma correspondência entre as subimagens
-      if(ImageMatchSubImage(img1,i,j,img2)){
-        match = 1;// Configura a correspondência como verdadeira
+      // Verifica se há uma correspondência entre as subimagens
+      if (ImageMatchSubImage(img1, i, j, img2)) {
+        
+        match = 1; // Configura a correspondência como verdadeira
         // Define a posição x e y da correspondência
         *px = i;
-        *py = j; 
-        break;// Sai do loop interno, pois encontrou uma correspondência
+        *py = j;
+        break; // Sai do loop interno, pois encontrou uma correspondência
       }
-      
     }
+
     // Sai do loop externo se uma correspondência já foi encontrada
     if (match) {
       break;
     }
   }
+
   return match; //1 se verdadeiro, 0 caso contrario
 }
 
@@ -735,6 +744,7 @@ void ImageBlur(Image img, int dx, int dy) { ///
           if (ni >= 0 && ni < img->width && nj >= 0 && nj < img->height) {
             sum += ImageGetPixel(img, ni, nj);
             count++;
+            COMPARISONS++;
           }
         }
       }
@@ -743,6 +753,7 @@ void ImageBlur(Image img, int dx, int dy) { ///
       if (count > 0) {
         pix_filter = (sum / count + 0.5) ;
         ImageSetPixel(img_copia, i, j, pix_filter);
+        PIXMEM++; 
       }
     }
   }

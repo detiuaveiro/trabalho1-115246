@@ -101,6 +101,9 @@ int main(int ac, char* av[]) {
   int n = 0;          // number of images created
 
   int k = 1;
+
+  InstrCalibrate();
+
   while (k < ac) {
     if (strcmp(av[k], "info") == 0) {
       if (n < 1) { err = 2; break; }
@@ -194,6 +197,10 @@ int main(int ac, char* av[]) {
       } else {
         printf("# NOTFOUND\n");
       }
+
+      InstrPrint();
+      InstrReset();
+
     } else if (strcmp(av[k], "blur") == 0) {
       if (++k >= ac) { err = 1; break; }
       if (n < 1) { err = 2; break; }
@@ -201,6 +208,10 @@ int main(int ac, char* av[]) {
       if (sscanf(av[k], "%d,%d", &dx, &dy) != 2) { err = 5; break; }
       fprintf(stderr, "Blur I%d with %dx%d mean filter\n", n-1, 2*dx+1, 2*dy+1);
       ImageBlur(img[n-1], dx, dy);
+
+      InstrPrint();
+      InstrReset();
+
     } else if (strcmp(av[k], "save") == 0) {
       if (++k >= ac) { err = 1; break; }
       if (n < 1) { err = 2; break; }

@@ -34,6 +34,7 @@ double cpu_time(void) ; ///
 
 #include <time.h>
 
+
 double cpu_time(void) {
   struct timespec current_time;
 
@@ -41,6 +42,23 @@ double cpu_time(void) {
     return -1.0; // clock_gettime() failed!!!
   return (double)current_time.tv_sec + 1.0e-9 * (double)current_time.tv_nsec;
 }
+
+/*
+
+// funções para iniciar o tempo e para-lo
+double start_time, end_time;
+
+void StartTimer() {
+    start_time = cpu_time();
+}
+
+void StopTimer() {
+    end_time = cpu_time();
+}
+
+double ElapsedTime() {
+    return end_time - start_time;
+}*/
 
 #endif
 

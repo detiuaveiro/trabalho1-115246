@@ -55,7 +55,7 @@ Sugere-se o desenvolvimento progressivo pela seguinte ordem:
 5. Completar`ImageNegative`-LISTO-VERIFICADO, 1
             `ImageThreshold`-LISTO-VERIFICADO, 2
             `ImageBrighten`-LISTO-VERIFICADO.3
-6. Completar `ImageValidRect`.-LISTO-
+6. Completar `ImageValidRect`.-LISTO-VERIFICADO
 7. Completar `ImageMirror`-LISTO-VERIFICADO, 4
             `ImageRotate`.-LISTO-VERIFICADO  5
 8. Completar `ImageCrop`LISTO-VERIFICADO,   6
