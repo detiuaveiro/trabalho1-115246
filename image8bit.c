@@ -179,8 +179,7 @@ Image ImageCreate(int width, int height, uint8 maxval) { ///
   Image img = malloc(sizeof(struct image));
   //erro ao criar
   if (img == NULL) {
-    errno = ENOMEM;;
-    errCause = ENOMEM;
+    errno = ENOMEM;
     return NULL;}
 
   //iniciar valores da imagem
@@ -194,7 +193,6 @@ Image ImageCreate(int width, int height, uint8 maxval) { ///
   if (img -> pixel == NULL) {
     free(img);
     errno = ENOMEM;
-    errCause = ENOMEM;
     return NULL;
   }
 
@@ -517,7 +515,6 @@ Image ImageRotate(Image img) { ///
     // Cria uma nova imagem com largura e altura trocadas
   Image img_new = ImageCreate(img->height, img->width, img->maxval);
   if(img_new == NULL){
-    errCause = ENOMEM;
     errno = ENOMEM;
     return NULL;
     }
@@ -549,7 +546,6 @@ Image ImageMirror(Image img) { ///
   Image img_new = ImageCreate(img -> width,img -> height,img -> maxval);
   if (img_new == NULL) { 
     errno = ENOMEM;
-    errCause = ENOMEM;
     return NULL;}
 
   uint8 pix_og;// Variável para armazenar o valor original do pixel
@@ -583,7 +579,6 @@ Image ImageCrop(Image img, int x, int y, int w, int h) { ///
   Image img_new = ImageCreate(w,h,img -> maxval);
   if (img_new == NULL) { 
     errno = ENOMEM;
-    errCause = ENOMEM;
     return NULL;}
 
   uint8 pix_og;// Variável para armazenar o valor original do pixel
